@@ -33,3 +33,5 @@ jobs:
 
       - name: Run tests
         run: uv run pytest -v
+        env:
+          SECRET_KEY: ci-test-secret-not-for-production-use
