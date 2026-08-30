@@ -1,0 +1,62 @@
+[project]
+name = "liftiq-api"
+version = "0.1.0"
+description = "LiftIQ backend — biomechanical analysis API for weightlifting technique"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0",
+    "aiosqlite>=0.20",
+    "alembic>=1.13",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.6",
+    "python-jose[cryptography]>=3.3",
+    "pwdlib[argon2]>=0.2",
+    "python-multipart>=0.0.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "httpx>=0.27",
+    "ruff>=0.8",
+    "pyrefly>=0.1",
+    "pre-commit>=4.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+exclude = ["alembic/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM", "C90", "PL"]
+ignore = ["PLR0913"]  # FastAPI's Depends()-heavy signatures are expected to take many args
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.pylint]
+max-statements = 25
+
+[tool.ruff.lint.per-file-ignores]
+# Asserting literal HTTP status codes in tests is idiomatic, not a magic-number smell.
+"tests/**" = ["PLR2004"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pyrefly]
+project-includes = ["app", "tests"]
+project-excludes = ["alembic/versions/**", ".venv/**"]
+python-version = "3.13"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
