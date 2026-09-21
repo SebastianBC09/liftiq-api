@@ -1,17 +1,18 @@
-"""Declarative base + central import point for all ORM models.
+"""Declarative metadata with stable names for migration-generated constraints."""
 
-Alembic's autogenerate needs every model imported somewhere that it scans,
-so as models are added under app/models/, import them here too.
-"""
-
+from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
+
+NAMING_CONVENTION = {
+    "ix": "ix_%(table_name)s_%(column_0_name)s",
+    "uq": "uq_%(table_name)s_%(column_0_name)s",
+    "ck": "ck_%(table_name)s_%(constraint_name)s",
+    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
+    "pk": "pk_%(table_name)s",
+}
 
 
 class Base(DeclarativeBase):
-    """Base class for all SQLAlchemy models."""
+    """All models share this metadata; check constraints must have explicit names."""
 
-
-# from app.models.user import User  # noqa: F401
-# from app.models.exercise import Exercise  # noqa: F401
-# from app.models.session import Session  # noqa: F401
-# from app.models.user_favorite import UserFavorite  # noqa: F401
+    metadata = MetaData(naming_convention=NAMING_CONVENTION)

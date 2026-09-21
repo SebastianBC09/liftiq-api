@@ -3,19 +3,19 @@
 import asyncio
 from logging.config import fileConfig
 
-from sqlalchemy import pool
 from sqlalchemy.engine import Connection
-from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-from app.core.config import get_settings
+from app import models  # noqa: F401 -- register domain models here as they are added
+from app.core.config import Settings
 from app.db.base import Base
+from app.db.session import Database
 
 config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-config.set_main_option("sqlalchemy.url", get_settings().database_url)
+settings = Settings()
 
 target_metadata = Base.metadata
 
@@ -23,9 +23,10 @@ target_metadata = Base.metadata
 def run_migrations_offline() -> None:
     """Run migrations without a live DB connection, emitting SQL to stdout."""
     context.configure(
-        url=get_settings().database_url,
+        url=settings.database_url,
         target_metadata=target_metadata,
         literal_binds=True,
+        transactional_ddl=True,
         dialect_opts={"paramstyle": "named"},
     )
     with context.begin_transaction():
@@ -34,21 +35,24 @@ def run_migrations_offline() -> None:
 
 def do_run_migrations(connection: Connection) -> None:
     """Configure Alembic against an already-open connection and run migrations."""
-    context.configure(connection=connection, target_metadata=target_metadata)
+    context.configure(
+        connection=connection,
+        target_metadata=target_metadata,
+        render_as_batch=True,
+        transactional_ddl=True,
+    )
     with context.begin_transaction():
         context.run_migrations()
 
 
 async def run_migrations_online() -> None:
     """Run migrations against a live async DB connection."""
-    connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
-        prefix="sqlalchemy.",
-        poolclass=pool.NullPool,
-    )
-    async with connectable.connect() as connection:
-        await connection.run_sync(do_run_migrations)
-    await connectable.dispose()
+    database = Database(settings.database_url)
+    try:
+        async with database.engine.connect() as connection:
+            await connection.run_sync(do_run_migrations)
+    finally:
+        await database.dispose()
 
 
 if context.is_offline_mode():

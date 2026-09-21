@@ -1,41 +1,40 @@
-"""Shared pytest fixtures: async test client + isolated in-memory test DB."""
+"""Isolated settings and application lifespan; never read a developer's dotenv."""
 
-from collections.abc import AsyncGenerator
+import os
+from collections.abc import AsyncIterator
 
+import pytest
 import pytest_asyncio
+from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
-from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
-from app.core.dependencies import get_db
-from app.db.base import Base
-from app.main import app
+from app.core.config import Settings
+from app.main import create_app
 
-TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+
+@pytest.fixture
+def settings(monkeypatch: pytest.MonkeyPatch) -> Settings:
+    """Remove deployment env overrides and supply test-only configuration."""
+    for name in list(os.environ):
+        if name.lower() in Settings.model_fields:
+            monkeypatch.delenv(name)
+    return Settings(
+        _env_file=None,
+        secret_key="test-only-signing-secret-at-least-64-bytes-for-token-validation-tests",
+        database_url="sqlite+aiosqlite:///:memory:",
+        environment="test",
+    )
+
+
+@pytest.fixture
+def app(settings: Settings) -> FastAPI:
+    return create_app(settings)
 
 
 @pytest_asyncio.fixture
-async def db_session() -> AsyncGenerator[AsyncSession]:
-    """Provide a fresh in-memory SQLite session per test, tables created up front."""
-    engine = create_async_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    session_factory = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
-    async with session_factory() as session:
-        yield session
-
-    await engine.dispose()
-
-
-@pytest_asyncio.fixture
-async def client(db_session: AsyncSession) -> AsyncGenerator[AsyncClient]:
-    """Provide an httpx AsyncClient wired to the app with get_db overridden to the test DB."""
-
-    async def override_get_db() -> AsyncGenerator[AsyncSession]:
-        yield db_session
-
-    app.dependency_overrides[get_db] = override_get_db
-    transport = ASGITransport(app=app)
-    async with AsyncClient(transport=transport, base_url="http://test") as ac:
-        yield ac
-    app.dependency_overrides.clear()
+async def client(app: FastAPI) -> AsyncIterator[AsyncClient]:
+    async with (
+        app.router.lifespan_context(app),
+        AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as client,
+    ):
+        yield client

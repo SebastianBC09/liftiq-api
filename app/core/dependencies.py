@@ -1,34 +1,40 @@
-"""Shared FastAPI dependencies: DB session and current-user resolution."""
+"""HTTP dependency wiring; business services do not import this module."""
 
-from collections.abc import AsyncGenerator
+from collections.abc import AsyncIterator
+from typing import Annotated, cast
 
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends, Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.security import decode_access_token
-from app.db.session import AsyncSessionLocal
+from app.core.config import Settings
+from app.core.exceptions import UnauthorizedError
+from app.core.security import AccessTokens
+from app.db.session import Database
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
+bearer_scheme = HTTPBearer(auto_error=False)
 
 
-async def get_db() -> AsyncGenerator[AsyncSession]:
-    """Yield a request-scoped async DB session."""
-    async with AsyncSessionLocal() as session:
+def get_settings(request: Request) -> Settings:
+    """Resolve configuration from this application, not a process-global cache."""
+    return cast(Settings, request.app.state.settings)
+
+
+async def get_db(request: Request) -> AsyncIterator[AsyncSession]:
+    """Provide one session per request; the use case owns its transaction."""
+    database = cast(Database, request.app.state.database)
+    async with database.session() as session:
         yield session
 
 
-async def get_current_user_id(token: str = Depends(oauth2_scheme)) -> str:
-    """Resolve the authenticated user id (JWT subject) from the bearer token.
-
-    NOTE: once the User model/repository exist, add a `get_current_user()`
-    dependency on top of this that fetches the full User row.
-    """
-    user_id = decode_access_token(token)
-    if user_id is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Could not validate credentials",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    return user_id
+async def get_current_user_id(
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(bearer_scheme)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> str:
+    """Validate the bearer subject; user existence will be checked in phase three."""
+    if credentials is None:
+        raise UnauthorizedError()
+    subject = AccessTokens(settings).decode(credentials.credentials)
+    if subject is None:
+        raise UnauthorizedError()
+    return subject
