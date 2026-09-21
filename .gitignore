@@ -12,3 +12,6 @@ build/
 *.egg-info/
 .DS_Store
 uv.lock.bak
+data/
+*.db-shm
+*.db-wal
