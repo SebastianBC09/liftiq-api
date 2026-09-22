@@ -7,8 +7,9 @@ client; this API will persist users, exercises, favorites, and training sessions
 
 Phase one establishes configuration, application lifecycle, SQLite transactions,
 security primitives, error handling, tests, and delivery infrastructure.
-`GET /health` is the only product endpoint. No domain tables, migration revisions,
-or registration/login/refresh/logout endpoints exist yet. The exercise seed
+Phase two adds the `users`, `credentials`, and `refresh_tokens` tables and
+initial migration `0001`. `GET /health` is still the only product endpoint;
+registration/login/refresh/logout endpoints arrive in phase three. The exercise seed
 script is still a placeholder.
 
 ## Stack
@@ -85,8 +86,8 @@ messages must never interpolate passwords, tokens, or other private values.
 Access tokens require `sub`, `iat`, `exp`, and `type: "access"`; subjects must be
 nonempty strings, and decoding only accepts HS256. Resolving a subject to an
 existing user is phase-three work. Password helpers use Argon2id and must be
-called outside the event loop when wired into async use cases. Long-lived
-refresh tokens, storage, rotation, and revocation are not implemented yet.
+called outside the event loop when wired into async use cases. Refresh-token material and persistence are implemented; issuance endpoints,
+rotation, and revocation behavior remain phase-three work.
 
 ## Migrations
 
@@ -103,9 +104,15 @@ schema changes require table recreation. Foreign keys stay enabled: migrations
 that rebuild referenced tables need deliberate dependency handling and testing.
 No application startup path calls `metadata.create_all()`.
 
-Phase one has no revisions, so upgrading creates only Alembic's version table.
-Tests exercise the runner on a temporary database; actual schema migration
-coverage is added with the domain models in phase two.
+Revision `0001` creates the auth tables. Tests apply the real migration to
+temporary databases, check for schema drift, downgrade a populated database,
+and re-upgrade. Downgrading to `base` deletes all auth data and is only suitable
+for disposable environments or a deliberate restore procedure. Back up the
+database before deployment; the downgrade is structural, not data recovery.
+
+`UTCDateTime` is an application conversion type. In generated revisions, render
+it as the underlying `sa.DateTime()` so historical migrations do not import
+mutable application code. Always review autogeneration output.
 
 ## Verification
 
@@ -154,3 +161,44 @@ CI installs the committed lockfile and runs lint, format, types, and tests.
 Publishing on `main`, `v*` tags, or manual dispatch first calls that same CI
 workflow; the image build/push job requires its success. uv is pinned consistently
 in CI and Docker, and pre-commit uses the project's locked tool versions.
+
+
+## Authentication schema
+
+| Table | Purpose and guarantees |
+|---|---|
+| `users` | UUID identity; unique canonical email; required profile; experience/goal checks; creation/update timestamps |
+| `credentials` | User PK/FK enforces at most one password credential; deleting a user cascades to its credential |
+| `refresh_tokens` | Unique SHA-256 digest, user/family identifiers, expiry, paired revocation timestamp/reason, optional device info |
+
+ORM email assignment strips surrounding whitespace and lowercases the address;
+login will use the same normalization. SQLite also checks trimmed, ASCII-lowercase
+storage and email length. Full email syntax and request validation belong to
+phase-three schemas. Required names are nonblank and limited to 100 characters.
+Height and weight use Decimal/NUMERIC(6,2), with database checks for positive
+values below 10,000 and at most two decimal places. These are storage limits;
+product-specific input ranges will be validated separately.
+
+Timestamps reject naive Python datetimes, normalize aware input to UTC, and
+restore UTC timezone information on load. SQLite stores naive UTC values.
+Database defaults set creation timestamps; ORM updates maintain `updated_at`.
+Raw SQL updates must explicitly update that field. Changing a password must
+explicitly update `password_updated_at` in the future service transaction.
+
+Refresh tokens use 32 random bytes encoded with URL-safe base64. Only their
+64-character lowercase SHA-256 digest belongs in the table; password hashes
+continue to use Argon2id. No raw-token column exists. Expiration must follow
+issuance. Revocation time and reason must either both be absent or both be
+present; allowed reasons are `rotated`, `logout`, and `reuse`.
+
+The `(user_id, family_id)` index supports user-scoped family operations and user
+lookups; unique constraints index email and token digest without redundant
+indexes. Services must preserve the same family across rotation, scope family
+operations by user, and retain consumed tokens for reuse detection. These
+behaviors are phase three, not guarantees provided by the table alone.
+
+Credentials and tokens cascade on user deletion. No implicit ORM relationship
+loading is configured: repositories will query explicitly. The FK permits a user
+to temporarily exist without credentials; the registration use case will enforce
+creation of all three records in one transaction. Integration tests already
+verify that a failed token insert can roll back the entire transaction.
