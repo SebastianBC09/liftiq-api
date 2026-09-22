@@ -1,16 +1,18 @@
 # LiftIQ API
 
 FastAPI backend for LiftIQ. Pose detection and technique analysis run on the
-client; this API will persist users, exercises, favorites, and training sessions.
+client; this API persists accounts and authentication state. Exercise, favorite,
+and training-session endpoints are future work.
 
 ## Status
 
 Phase one establishes configuration, application lifecycle, SQLite transactions,
 security primitives, error handling, tests, and delivery infrastructure.
 Phase two adds the `users`, `credentials`, and `refresh_tokens` tables and
-initial migration `0001`. `GET /health` is still the only product endpoint;
-registration/login/refresh/logout endpoints arrive in phase three. The exercise seed
-script is still a placeholder.
+initial migration `0001`. Phase three implements JSON registration, login, refresh,
+logout, and current-user endpoints with transactional services and repositories.
+See [the auth contract](docs/auth.md) for payloads and client integration behavior.
+The exercise seed script is still a placeholder.
 
 ## Stack
 
@@ -63,9 +65,12 @@ uses bearer tokens. Browser refresh-token storage is a separate future decision.
 
 The application lifespan owns the database engine and disposes it on shutdown.
 `get_db` yields a request-scoped session. Session closure rolls back unfinished
-work; it never commits implicitly. Use cases will own an explicit unit of work
-when repositories/services arrive. Infrastructure implements its transaction
-with `session.begin()` (commit on success, rollback on failure).
+work; it never commits implicitly. Auth services use the `AuthTransactions` port;
+its SQLAlchemy adapter creates a session per transaction and commits once on
+success or rolls back on failure. Auth write transactions use `BEGIN IMMEDIATE`
+before reading to serialize SQLite writers and avoid deferred lock upgrades.
+Login closes its initial read transaction before password verification, then
+rechecks credentials in the write transaction. Password work never holds a write lock.
 
 Every SQLite connection enables foreign keys and a five-second busy timeout.
 SQLAlchemy explicitly begins transactions, including reads and DDL, avoiding
@@ -85,9 +90,10 @@ messages must never interpolate passwords, tokens, or other private values.
 
 Access tokens require `sub`, `iat`, `exp`, and `type: "access"`; subjects must be
 nonempty strings, and decoding only accepts HS256. Resolving a subject to an
-existing user is phase-three work. Password helpers use Argon2id and must be
-called outside the event loop when wired into async use cases. Refresh-token material and persistence are implemented; issuance endpoints,
-rotation, and revocation behavior remain phase-three work.
+existing user happens in the current-user use case. The password adapter runs
+Argon2id work in worker threads and verifies a dummy hash for unknown accounts.
+Refresh tokens rotate atomically; consumed-token reuse commits family revocation
+before returning 401. Logout is idempotent and revokes the associated family.
 
 ## Migrations
 
@@ -172,9 +178,8 @@ in CI and Docker, and pre-commit uses the project's locked tool versions.
 | `refresh_tokens` | Unique SHA-256 digest, user/family identifiers, expiry, paired revocation timestamp/reason, optional device info |
 
 ORM email assignment strips surrounding whitespace and lowercases the address;
-login will use the same normalization. SQLite also checks trimmed, ASCII-lowercase
-storage and email length. Full email syntax and request validation belong to
-phase-three schemas. Required names are nonblank and limited to 100 characters.
+login uses the same normalization. SQLite also checks trimmed, ASCII-lowercase
+storage and email length. Request schemas validate full email syntax. Required names are nonblank and limited to 100 characters.
 Height and weight use Decimal/NUMERIC(6,2), with database checks for positive
 values below 10,000 and at most two decimal places. These are storage limits;
 product-specific input ranges will be validated separately.
@@ -195,10 +200,10 @@ The `(user_id, family_id)` index supports user-scoped family operations and user
 lookups; unique constraints index email and token digest without redundant
 indexes. Services must preserve the same family across rotation, scope family
 operations by user, and retain consumed tokens for reuse detection. These
-behaviors are phase three, not guarantees provided by the table alone.
+behaviors are implemented by the auth use cases, not the table alone.
 
 Credentials and tokens cascade on user deletion. No implicit ORM relationship
-loading is configured: repositories will query explicitly. The FK permits a user
-to temporarily exist without credentials; the registration use case will enforce
+loading is configured: repositories query explicitly. The FK permits a user
+to temporarily exist without credentials; the registration use case enforces
 creation of all three records in one transaction. Integration tests already
 verify that a failed token insert can roll back the entire transaction.
