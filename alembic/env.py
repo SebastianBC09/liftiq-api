@@ -2,6 +2,7 @@
 
 import asyncio
 from logging.config import fileConfig
+from pathlib import Path
 
 from sqlalchemy.engine import Connection
 
@@ -12,10 +13,12 @@ from app.db.base import Base
 from app.db.session import Database
 
 config = context.config
+settings_kwargs: dict[str, str | Path] = {}
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
+    settings_kwargs["_env_file"] = Path(config.config_file_name).resolve().parent / ".env"
 
-settings = Settings()
+settings = Settings(**settings_kwargs)
 
 target_metadata = Base.metadata
 
