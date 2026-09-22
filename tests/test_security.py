@@ -34,6 +34,9 @@ def test_required_claims(settings: Settings, claim: str) -> None:
     "override",
     [
         {"exp": 1},
+        {"exp": {}},
+        {"iat": []},
+        {"exp": float("inf")},
         {"sub": ""},
         {"sub": "   "},
         {"sub": 12},

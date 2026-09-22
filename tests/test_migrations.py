@@ -1,4 +1,4 @@
-"""Check the migration runner now; domain revisions arrive in phase two."""
+"""Verify the real auth migration, schema drift, and failure rollback."""
 
 import shutil
 import sqlite3
@@ -9,6 +9,7 @@ from alembic.config import Config
 
 from alembic import command
 from app.core.config import Settings
+from tests.schema_helpers import connect, insert_token, insert_user
 
 
 def test_migration_runner_is_independent_of_working_directory(
@@ -20,11 +21,26 @@ def test_migration_runner_is_independent_of_working_directory(
     monkeypatch.setenv("DATABASE_URL", f"sqlite+aiosqlite:///{tmp_path / 'migrations.db'}")
     command.upgrade(config, "head")
     command.check(config)
+    with connect(tmp_path / "migrations.db") as connection:
+        user_id = insert_user(connection)
+        connection.execute(
+            "INSERT INTO credentials (user_id, password_hash) VALUES (?, ?)", (user_id, "hash")
+        )
+        insert_token(connection, user_id)
     command.downgrade(config, "base")
+    with connect(tmp_path / "migrations.db") as connection:
+        assert connection.execute(
+            "SELECT name FROM sqlite_master WHERE type='table'"
+        ).fetchall() == [("alembic_version",)]
     command.upgrade(config, "head")
     with sqlite3.connect(tmp_path / "migrations.db") as connection:
         tables = connection.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()
-    assert tables == [("alembic_version",)]
+    assert {name for (name,) in tables} == {
+        "alembic_version",
+        "users",
+        "credentials",
+        "refresh_tokens",
+    }
 
 
 def test_failed_migration_rolls_back_ddl(
@@ -37,7 +53,7 @@ def test_failed_migration_rolls_back_ddl(
     (tmp_path / "alembic/versions/test_failure.py").write_text(
         "from alembic import op\n"
         'revision = "test_failure"\n'
-        "down_revision = None\n"
+        'down_revision = "0001"\n'
         "def upgrade():\n"
         '    op.execute("CREATE TABLE incomplete (id INTEGER)")\n'
         '    raise RuntimeError("intentional migration failure")\n'

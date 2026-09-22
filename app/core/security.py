@@ -51,7 +51,8 @@ class AccessTokens:
                 algorithms=[self._settings.algorithm],
                 options={"require": ["sub", "iat", "exp", "type"]},
             )
-        except jwt.InvalidTokenError:
+        except (jwt.InvalidTokenError, TypeError, OverflowError):
+            # PyJWT may expose numeric-date conversion errors for malformed signed claims.
             return None
         subject = payload["sub"]
         if not isinstance(subject, str) or not subject.strip() or payload["type"] != "access":

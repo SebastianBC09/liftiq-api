@@ -14,10 +14,14 @@ async def domain_error_handler(request: Request, exc: Exception) -> JSONResponse
         return JSONResponse(
             status_code=401,
             content={"detail": "Could not validate credentials", "code": "unauthorized"},
-            headers={"WWW-Authenticate": "Bearer"},
+            headers={"WWW-Authenticate": "Bearer", "Cache-Control": "no-store"},
         )
     status_code, code = (409, "conflict") if isinstance(exc, ConflictError) else (404, "not_found")
-    return JSONResponse(status_code=status_code, content={"detail": str(exc), "code": code})
+    return JSONResponse(
+        status_code=status_code,
+        content={"detail": str(exc), "code": code},
+        headers={"Cache-Control": "no-store"},
+    )
 
 
 async def validation_error_handler(request: Request, exc: Exception) -> JSONResponse:
@@ -29,6 +33,7 @@ async def validation_error_handler(request: Request, exc: Exception) -> JSONResp
     ]
     return JSONResponse(
         status_code=422,
+        headers={"Cache-Control": "no-store"},
         content={
             "detail": "Request validation failed",
             "code": "validation_error",
@@ -43,7 +48,7 @@ async def http_error_handler(request: Request, exc: Exception) -> JSONResponse:
     return JSONResponse(
         status_code=exc.status_code,
         content={"detail": exc.detail, "code": f"http_{exc.status_code}"},
-        headers=exc.headers,
+        headers={"Cache-Control": "no-store", **(exc.headers or {})},
     )
 
 

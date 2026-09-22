@@ -22,7 +22,10 @@ def _configure_sqlite(dbapi_connection: Any, connection_record: Any) -> None:
 
 def _begin_sqlite(connection: Connection) -> None:
     """Make DDL and reads transactional too, instead of sqlite legacy behavior."""
-    connection.exec_driver_sql("BEGIN")
+    statement = (
+        "BEGIN IMMEDIATE" if connection.get_execution_options().get("sqlite_write") else "BEGIN"
+    )
+    connection.exec_driver_sql(statement)
 
 
 class Database:

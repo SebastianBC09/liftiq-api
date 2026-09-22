@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.errors import register_error_handlers
 from app.api.v1.router import api_router
 from app.core.config import Settings
+from app.core.passwords import Passwords
 from app.db.session import Database
 
 
@@ -18,6 +19,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
     database = Database(app.state.settings.database_url)
     app.state.database = database
     try:
+        app.state.passwords = await Passwords.create()
         yield
     finally:
         await database.dispose()
