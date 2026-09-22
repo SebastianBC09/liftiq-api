@@ -9,3 +9,7 @@ tests
 *.db
 .env
 *.md
+
+data
+*.db-shm
+*.db-wal

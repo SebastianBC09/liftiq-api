@@ -1,1 +1,1 @@
-"""Test package. conftest.py provides the async client + isolated in-memory DB fixtures."""
+"""Tests with isolated settings, application lifespans, and temporary databases."""

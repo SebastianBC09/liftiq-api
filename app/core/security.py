@@ -1,40 +1,59 @@
-"""Password hashing and JWT helpers."""
+"""Password hashing and access-token primitives; no implicit configuration."""
 
 from datetime import UTC, datetime, timedelta
 
-from jose import JWTError, jwt
+import jwt
 from pwdlib import PasswordHash
 
-from app.core.config import get_settings
+from app.core.config import Settings
 
-password_hash = PasswordHash.recommended()  # Argon2id by default, per OWASP guidance
+password_hash = PasswordHash.recommended()
 
 
 def hash_password(plain_password: str) -> str:
-    """Hash a plaintext password."""
+    """Hash a password with Argon2id; callers must offload this CPU-bound work."""
     return password_hash.hash(plain_password)
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Check a plaintext password against its stored hash."""
+    """Verify a password; callers must offload this CPU-bound work."""
     return password_hash.verify(plain_password, hashed_password)
 
 
-def create_access_token(subject: str, expires_delta: timedelta | None = None) -> str:
-    """Create a signed JWT for the given subject (typically the user id)."""
-    settings = get_settings()
-    expire = datetime.now(UTC) + (
-        expires_delta or timedelta(minutes=settings.access_token_expire_minutes)
-    )
-    payload = {"sub": subject, "exp": expire}
-    return jwt.encode(payload, settings.secret_key, algorithm=settings.algorithm)
+class AccessTokens:
+    """Issue and validate access tokens for one application's configuration."""
 
+    def __init__(self, settings: Settings) -> None:
+        self._settings = settings
 
-def decode_access_token(token: str) -> str | None:
-    """Decode a JWT and return its subject, or None if invalid/expired."""
-    settings = get_settings()
-    try:
-        payload = jwt.decode(token, settings.secret_key, algorithms=[settings.algorithm])
-    except JWTError:
-        return None
-    return payload.get("sub")
+    def create(self, subject: str) -> str:
+        """Issue a short-lived access token with a nonempty user identifier."""
+        if not subject.strip():
+            raise ValueError("Token subject must not be empty")
+        now = datetime.now(UTC)
+        return jwt.encode(
+            {
+                "sub": subject,
+                "iat": now,
+                "exp": now + timedelta(minutes=self._settings.access_token_expire_minutes),
+                "type": "access",
+            },
+            self._settings.secret_key.get_secret_value(),
+            algorithm=self._settings.algorithm,
+        )
+
+    def decode(self, token: str) -> str | None:
+        """Return the subject only for a valid, unexpired access token."""
+        try:
+            payload = jwt.decode(
+                token,
+                self._settings.secret_key.get_secret_value(),
+                algorithms=[self._settings.algorithm],
+                options={"require": ["sub", "iat", "exp", "type"]},
+            )
+        except jwt.InvalidTokenError:
+            return None
+        subject = payload["sub"]
+        if not isinstance(subject, str) or not subject.strip() or payload["type"] != "access":
+            return None
+        return subject
