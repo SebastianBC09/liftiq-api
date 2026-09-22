@@ -53,3 +53,19 @@ def migrated_db_path(settings: Settings, tmp_path: Path, monkeypatch: pytest.Mon
     config = Config(str(Path(__file__).resolve().parents[1] / "alembic.ini"))
     command.upgrade(config, "head")
     return path
+
+
+@pytest.fixture
+def auth_app(settings: Settings, migrated_db_path: Path) -> FastAPI:
+    return create_app(
+        settings.model_copy(update={"database_url": f"sqlite+aiosqlite:///{migrated_db_path}"})
+    )
+
+
+@pytest_asyncio.fixture
+async def auth_client(auth_app: FastAPI) -> AsyncIterator[AsyncClient]:
+    async with (
+        auth_app.router.lifespan_context(auth_app),
+        AsyncClient(transport=ASGITransport(app=auth_app), base_url="http://test") as client,
+    ):
+        yield client

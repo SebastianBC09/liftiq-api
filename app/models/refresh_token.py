@@ -1,20 +1,14 @@
 """Refresh-token digests and rotation families; never persist raw tokens."""
 
 from datetime import datetime
-from enum import StrEnum
 from uuid import UUID, uuid4
 
 from sqlalchemy import CheckConstraint, Enum, ForeignKey, Index, String, Uuid, text
 from sqlalchemy.orm import Mapped, mapped_column
 
+from app.core.enums import RevocationReason
 from app.db.base import Base
 from app.db.types import UTCDateTime
-
-
-class RevocationReason(StrEnum):
-    ROTATED = "rotated"
-    LOGOUT = "logout"
-    REUSE = "reuse"
 
 
 class RefreshToken(Base):

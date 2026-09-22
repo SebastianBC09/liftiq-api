@@ -2,27 +2,14 @@
 
 from datetime import datetime
 from decimal import Decimal
-from enum import StrEnum
 from uuid import UUID, uuid4
 
 from sqlalchemy import CheckConstraint, Enum, Numeric, String, Uuid, text
 from sqlalchemy.orm import Mapped, mapped_column, validates
 
+from app.core.enums import ExperienceLevel, TrainingGoal
 from app.db.base import Base
 from app.db.types import UTCDateTime, utc_now
-
-
-class ExperienceLevel(StrEnum):
-    BEGINNER = "beginner"
-    INTERMEDIATE = "intermediate"
-    ADVANCED = "advanced"
-
-
-class TrainingGoal(StrEnum):
-    STRENGTH = "strength"
-    HYPERTROPHY = "hypertrophy"
-    TECHNIQUE = "technique"
-    GENERAL_FITNESS = "general_fitness"
 
 
 class User(Base):

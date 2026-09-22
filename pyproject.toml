@@ -11,6 +11,7 @@ dependencies = [
     "aiosqlite>=0.20",
     "alembic>=1.13",
     "pydantic>=2.10",
+    "email-validator>=2.2,<3",
     "pydantic-settings>=2.6",
     "PyJWT>=2.10,<3",
     "pwdlib[argon2]>=0.2",
