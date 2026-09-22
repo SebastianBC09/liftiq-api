@@ -44,7 +44,7 @@ async def test_profile_round_trip_and_update(migrated_db_path: Path) -> None:
             assert stored.created_at.tzinfo == UTC
             before = stored.updated_at
             stored.first_name = "Grace"
-        async with database.session() as session:
+        async with database.session() as session, session.begin():
             stored = await session.get(User, user_id)
             assert stored is not None and stored.updated_at >= before
     finally:
