@@ -1,8 +1,8 @@
 # LiftIQ API
 
 FastAPI backend for LiftIQ. Pose detection and technique analysis run on the
-client; this API persists accounts and authentication state. Exercise, favorite,
-and training-session endpoints are future work.
+client; this API persists accounts, authentication state, and the exercise catalog.
+Favorite and training-session endpoints are future work.
 
 ## Status
 
@@ -12,7 +12,8 @@ Phase two adds the `users`, `credentials`, and `refresh_tokens` tables and
 initial migration `0001`. Phase three implements JSON registration, login, refresh,
 logout, and current-user endpoints with transactional services and repositories.
 See [the auth contract](docs/auth.md) for payloads and client integration behavior.
-The exercise seed script is still a placeholder.
+Phase four adds a public exercise catalog and an explicit, repeatable seed command.
+See [the catalog contract](docs/exercises.md) for filtering and analysis metadata.
 
 ## Stack
 

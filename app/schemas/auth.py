@@ -5,8 +5,6 @@ from typing import Annotated, Literal
 from uuid import UUID
 
 from pydantic import (
-    BaseModel,
-    ConfigDict,
     EmailStr,
     Field,
     SecretStr,
@@ -14,18 +12,12 @@ from pydantic import (
     field_serializer,
     field_validator,
 )
-from pydantic.alias_generators import to_camel
 
 from app.core.enums import ExperienceLevel, TrainingGoal
+from app.schemas.base import ApiModel
 
 Name = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=100)]
 Measurement = Annotated[Decimal, Field(gt=0, lt=10000, max_digits=6, decimal_places=2)]
-
-
-class ApiModel(BaseModel):
-    model_config = ConfigDict(
-        alias_generator=to_camel, populate_by_name=True, from_attributes=True, extra="forbid"
-    )
 
 
 class EmailRequest(ApiModel):
