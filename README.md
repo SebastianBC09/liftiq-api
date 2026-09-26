@@ -1,8 +1,8 @@
 # LiftIQ API
 
 FastAPI backend for LiftIQ. Pose detection and technique analysis run on the
-client; this API persists accounts, authentication state, and the exercise catalog.
-Favorite and training-session endpoints are future work.
+client; this API persists accounts, authentication state, the exercise catalog, and favorites.
+Training-session endpoints are future work.
 
 ## Status
 
@@ -14,6 +14,8 @@ logout, and current-user endpoints with transactional services and repositories.
 See [the auth contract](docs/auth.md) for payloads and client integration behavior.
 Phase four adds a public exercise catalog and an explicit, repeatable seed command.
 See [the catalog contract](docs/exercises.md) for filtering and analysis metadata.
+Phase five adds authenticated favorites with idempotent mutations and atomic reordering.
+See [the favorites contract](docs/favorites.md) for client integration and conflict handling.
 
 ## Stack
 
