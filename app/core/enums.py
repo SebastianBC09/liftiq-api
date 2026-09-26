@@ -20,3 +20,19 @@ class RevocationReason(StrEnum):
     ROTATED = "rotated"
     LOGOUT = "logout"
     REUSE = "reuse"
+
+
+class MuscleGroup(StrEnum):
+    CHEST = "chest"
+    BACK = "back"
+    LEGS = "legs"
+    SHOULDERS = "shoulders"
+    BICEPS = "biceps"
+    TRICEPS = "triceps"
+    CORE = "core"
+
+
+class Difficulty(StrEnum):
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"

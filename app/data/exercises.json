@@ -1,0 +1,847 @@
+[
+  {
+    "slug": "barbell-bench-press",
+    "name": "Press de banca con barra",
+    "muscleGroup": "chest",
+    "difficulty": "medium",
+    "description": "Empuje horizontal en banco con barra.",
+    "instructions": [
+      "Apoya los pies y estabiliza los hombros sobre el banco.",
+      "Baja la barra con control y empuja manteniendo las muñecas alineadas."
+    ],
+    "commonMistakes": [
+      "Rebotar la barra sobre el pecho.",
+      "Perder el apoyo de los pies."
+    ],
+    "primaryMuscles": [
+      "Pectoral mayor"
+    ],
+    "secondaryMuscles": [
+      "Tríceps",
+      "Deltoides anterior"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "dumbbell-bench-press",
+    "name": "Press de banca con mancuernas",
+    "muscleGroup": "chest",
+    "difficulty": "medium",
+    "description": "Empuje horizontal con cargas independientes.",
+    "instructions": [
+      "Coloca las mancuernas sobre el pecho con el cuerpo apoyado.",
+      "Baja de forma controlada y vuelve a extender los brazos."
+    ],
+    "commonMistakes": [
+      "Dejar caer las cargas al bajar.",
+      "Mover un brazo mucho antes que el otro."
+    ],
+    "primaryMuscles": [
+      "Pectoral mayor"
+    ],
+    "secondaryMuscles": [
+      "Tríceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "incline-dumbbell-press",
+    "name": "Press inclinado con mancuernas",
+    "muscleGroup": "chest",
+    "difficulty": "medium",
+    "description": "Empuje sobre un banco inclinado.",
+    "instructions": [
+      "Apoya espalda y pies antes de iniciar.",
+      "Empuja las mancuernas y desciende con control."
+    ],
+    "commonMistakes": [
+      "Elevar los hombros hacia las orejas.",
+      "Arquear la espalda para mover más peso."
+    ],
+    "primaryMuscles": [
+      "Pectoral mayor"
+    ],
+    "secondaryMuscles": [
+      "Deltoides anterior",
+      "Tríceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "push-up",
+    "name": "Flexión de brazos",
+    "muscleGroup": "chest",
+    "difficulty": "easy",
+    "description": "Empuje con el peso corporal desde el suelo.",
+    "instructions": [
+      "Apoya las manos y mantén alineados tronco y piernas.",
+      "Flexiona los codos para acercarte al suelo y empuja para regresar."
+    ],
+    "commonMistakes": [
+      "Dejar caer la cadera.",
+      "Adelantar solo la cabeza durante el descenso."
+    ],
+    "primaryMuscles": [
+      "Pectoral mayor"
+    ],
+    "secondaryMuscles": [
+      "Tríceps",
+      "Abdominales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "cable-chest-fly",
+    "name": "Apertura de pecho en poleas",
+    "muscleGroup": "chest",
+    "difficulty": "medium",
+    "description": "Aducción de los brazos con resistencia de poleas.",
+    "instructions": [
+      "Adopta una posición estable y deja los codos ligeramente flexionados.",
+      "Acerca las manos frente al pecho y regresa lentamente."
+    ],
+    "commonMistakes": [
+      "Cambiar mucho la flexión del codo.",
+      "Balancear el tronco para cerrar los brazos."
+    ],
+    "primaryMuscles": [
+      "Pectoral mayor"
+    ],
+    "secondaryMuscles": [
+      "Deltoides anterior"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "lat-pulldown",
+    "name": "Jalón al pecho",
+    "muscleGroup": "back",
+    "difficulty": "easy",
+    "description": "Tracción vertical en polea alta.",
+    "instructions": [
+      "Ajusta el apoyo de los muslos y sujeta la barra.",
+      "Lleva la barra hacia la parte superior del pecho y permite un regreso controlado."
+    ],
+    "commonMistakes": [
+      "Tirar de la barra detrás de la cabeza.",
+      "Balancear el cuerpo para iniciar cada repetición."
+    ],
+    "primaryMuscles": [
+      "Dorsal ancho"
+    ],
+    "secondaryMuscles": [
+      "Bíceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "seated-cable-row",
+    "name": "Remo sentado en polea",
+    "muscleGroup": "back",
+    "difficulty": "easy",
+    "description": "Tracción horizontal desde una posición sentada.",
+    "instructions": [
+      "Apoya los pies y estabiliza el tronco.",
+      "Lleva el agarre hacia el cuerpo y extiende de nuevo los brazos con control."
+    ],
+    "commonMistakes": [
+      "Redondear repetidamente la espalda.",
+      "Usar un impulso brusco del tronco."
+    ],
+    "primaryMuscles": [
+      "Dorsal ancho",
+      "Romboides"
+    ],
+    "secondaryMuscles": [
+      "Bíceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "one-arm-dumbbell-row",
+    "name": "Remo con mancuerna a una mano",
+    "muscleGroup": "back",
+    "difficulty": "medium",
+    "description": "Tracción unilateral con apoyo estable.",
+    "instructions": [
+      "Apoya una mano y coloca el tronco estable.",
+      "Acerca la mancuerna al costado y baja sin girar el torso."
+    ],
+    "commonMistakes": [
+      "Rotar el cuerpo para elevar la carga.",
+      "Encoger el hombro durante toda la repetición."
+    ],
+    "primaryMuscles": [
+      "Dorsal ancho"
+    ],
+    "secondaryMuscles": [
+      "Romboides",
+      "Bíceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "pull-up",
+    "name": "Dominada",
+    "muscleGroup": "back",
+    "difficulty": "hard",
+    "description": "Tracción vertical usando el peso corporal.",
+    "instructions": [
+      "Sujeta la barra con un agarre estable.",
+      "Eleva el cuerpo de forma controlada y desciende sin soltarte bruscamente."
+    ],
+    "commonMistakes": [
+      "Balancear las piernas para tomar impulso.",
+      "Dejarse caer en el descenso."
+    ],
+    "primaryMuscles": [
+      "Dorsal ancho"
+    ],
+    "secondaryMuscles": [
+      "Bíceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "barbell-row",
+    "name": "Remo con barra",
+    "muscleGroup": "back",
+    "difficulty": "medium",
+    "description": "Tracción horizontal con el tronco inclinado.",
+    "instructions": [
+      "Inclina el tronco desde la cadera y estabiliza la espalda.",
+      "Acerca la barra al cuerpo y bájala manteniendo la posición."
+    ],
+    "commonMistakes": [
+      "Cambiar la inclinación del tronco en cada repetición.",
+      "Tirar con movimientos bruscos."
+    ],
+    "primaryMuscles": [
+      "Dorsal ancho",
+      "Romboides"
+    ],
+    "secondaryMuscles": [
+      "Bíceps",
+      "Erectores espinales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "bodyweight-squat",
+    "name": "Sentadilla libre",
+    "muscleGroup": "legs",
+    "difficulty": "easy",
+    "description": "Flexión y extensión de piernas con el peso corporal.",
+    "instructions": [
+      "Coloca los pies de forma estable y prepara el tronco.",
+      "Desciende flexionando caderas y rodillas y vuelve a levantarte con control."
+    ],
+    "commonMistakes": [
+      "Levantar los talones sin control.",
+      "Dejar que las rodillas se desplacen hacia dentro."
+    ],
+    "primaryMuscles": [
+      "Cuádriceps",
+      "Glúteos"
+    ],
+    "secondaryMuscles": [
+      "Aductores"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "goblet-squat",
+    "name": "Sentadilla goblet",
+    "muscleGroup": "legs",
+    "difficulty": "easy",
+    "description": "Sentadilla sosteniendo una carga frente al pecho.",
+    "instructions": [
+      "Sostén la carga cerca del pecho y apoya bien los pies.",
+      "Desciende y vuelve a subir conservando el control del tronco."
+    ],
+    "commonMistakes": [
+      "Separar demasiado la carga del cuerpo.",
+      "Perder el equilibrio hacia las puntas."
+    ],
+    "primaryMuscles": [
+      "Cuádriceps",
+      "Glúteos"
+    ],
+    "secondaryMuscles": [
+      "Abdominales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "romanian-deadlift",
+    "name": "Peso muerto rumano",
+    "muscleGroup": "legs",
+    "difficulty": "medium",
+    "description": "Bisagra de cadera con carga próxima al cuerpo.",
+    "instructions": [
+      "Sujeta la carga y mantén las rodillas ligeramente flexionadas.",
+      "Lleva la cadera hacia atrás y vuelve a extenderla manteniendo la carga cerca."
+    ],
+    "commonMistakes": [
+      "Alejar la carga de las piernas.",
+      "Convertir el movimiento en una sentadilla."
+    ],
+    "primaryMuscles": [
+      "Isquiotibiales",
+      "Glúteos"
+    ],
+    "secondaryMuscles": [
+      "Erectores espinales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "reverse-lunge",
+    "name": "Zancada hacia atrás",
+    "muscleGroup": "legs",
+    "difficulty": "medium",
+    "description": "Trabajo unilateral dando un paso hacia atrás.",
+    "instructions": [
+      "Desde una posición estable lleva un pie hacia atrás.",
+      "Flexiona ambas piernas y regresa empujando con la pierna delantera."
+    ],
+    "commonMistakes": [
+      "Perder la alineación de la rodilla delantera.",
+      "Dar pasos que impiden mantener el equilibrio."
+    ],
+    "primaryMuscles": [
+      "Cuádriceps",
+      "Glúteos"
+    ],
+    "secondaryMuscles": [
+      "Isquiotibiales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "standing-calf-raise",
+    "name": "Elevación de talones de pie",
+    "muscleGroup": "legs",
+    "difficulty": "easy",
+    "description": "Flexión plantar desde una posición de pie.",
+    "instructions": [
+      "Apóyate de forma estable y mantén el cuerpo erguido.",
+      "Eleva los talones y desciende de manera controlada."
+    ],
+    "commonMistakes": [
+      "Rebotar para mover la carga.",
+      "Girar los tobillos durante el ascenso."
+    ],
+    "primaryMuscles": [
+      "Gastrocnemio",
+      "Sóleo"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "dumbbell-shoulder-press",
+    "name": "Press de hombros con mancuernas",
+    "muscleGroup": "shoulders",
+    "difficulty": "medium",
+    "description": "Empuje vertical con mancuernas.",
+    "instructions": [
+      "Sostén las mancuernas a la altura de los hombros y estabiliza el tronco.",
+      "Empuja hacia arriba y vuelve a la posición inicial con control."
+    ],
+    "commonMistakes": [
+      "Arquear excesivamente la espalda.",
+      "Subir las cargas de forma descoordinada."
+    ],
+    "primaryMuscles": [
+      "Deltoides"
+    ],
+    "secondaryMuscles": [
+      "Tríceps"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "lateral-raise",
+    "name": "Elevación lateral",
+    "muscleGroup": "shoulders",
+    "difficulty": "easy",
+    "description": "Elevación de brazos hacia los lados con mancuernas.",
+    "instructions": [
+      "Coloca las cargas a los lados con los codos ligeramente flexionados.",
+      "Eleva los brazos hacia los lados y desciende despacio."
+    ],
+    "commonMistakes": [
+      "Balancear el tronco.",
+      "Encoger los hombros para mover las cargas."
+    ],
+    "primaryMuscles": [
+      "Deltoides lateral"
+    ],
+    "secondaryMuscles": [
+      "Trapecio"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "front-raise",
+    "name": "Elevación frontal",
+    "muscleGroup": "shoulders",
+    "difficulty": "easy",
+    "description": "Elevación de brazos al frente con resistencia.",
+    "instructions": [
+      "Sujeta la carga delante del cuerpo y estabiliza el tronco.",
+      "Eleva los brazos al frente y vuelve a bajar con control."
+    ],
+    "commonMistakes": [
+      "Tomar impulso con la cadera.",
+      "Perder la posición de las muñecas."
+    ],
+    "primaryMuscles": [
+      "Deltoides anterior"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "reverse-fly",
+    "name": "Apertura inversa con mancuernas",
+    "muscleGroup": "shoulders",
+    "difficulty": "medium",
+    "description": "Separación de brazos con el tronco inclinado.",
+    "instructions": [
+      "Inclina el tronco desde la cadera y mantén los codos ligeramente flexionados.",
+      "Abre los brazos hacia los lados y regresa lentamente."
+    ],
+    "commonMistakes": [
+      "Cambiar la posición del tronco para tomar impulso.",
+      "Convertir el movimiento en un remo."
+    ],
+    "primaryMuscles": [
+      "Deltoides posterior"
+    ],
+    "secondaryMuscles": [
+      "Romboides"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "cable-face-pull",
+    "name": "Face pull en polea",
+    "muscleGroup": "shoulders",
+    "difficulty": "medium",
+    "description": "Tracción de una cuerda hacia el rostro.",
+    "instructions": [
+      "Ajusta la polea y adopta una postura estable.",
+      "Acerca la cuerda al rostro separando las manos y vuelve con control."
+    ],
+    "commonMistakes": [
+      "Extender la espalda para tirar.",
+      "Usar una carga que impide controlar el regreso."
+    ],
+    "primaryMuscles": [
+      "Deltoides posterior"
+    ],
+    "secondaryMuscles": [
+      "Trapecio",
+      "Romboides"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "dumbbell-curl",
+    "name": "Curl de bíceps con mancuernas",
+    "muscleGroup": "biceps",
+    "difficulty": "easy",
+    "description": "Flexión de codos con mancuernas.",
+    "instructions": [
+      "Mantén los brazos junto al cuerpo y las muñecas estables.",
+      "Flexiona los codos y baja las mancuernas de forma controlada."
+    ],
+    "commonMistakes": [
+      "Balancear la espalda.",
+      "Adelantar los codos para terminar el movimiento."
+    ],
+    "primaryMuscles": [
+      "Bíceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Braquial"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "hammer-curl",
+    "name": "Curl martillo",
+    "muscleGroup": "biceps",
+    "difficulty": "easy",
+    "description": "Flexión de codos con agarre neutro.",
+    "instructions": [
+      "Sostén las mancuernas con las palmas enfrentadas.",
+      "Flexiona y extiende los codos manteniendo el agarre."
+    ],
+    "commonMistakes": [
+      "Girar las muñecas durante la repetición.",
+      "Impulsar las cargas con las piernas."
+    ],
+    "primaryMuscles": [
+      "Braquial",
+      "Braquiorradial"
+    ],
+    "secondaryMuscles": [
+      "Bíceps braquial"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "barbell-curl",
+    "name": "Curl con barra",
+    "muscleGroup": "biceps",
+    "difficulty": "easy",
+    "description": "Flexión de ambos codos con barra.",
+    "instructions": [
+      "Sujeta la barra y estabiliza el tronco.",
+      "Acerca la barra flexionando los codos y desciende lentamente."
+    ],
+    "commonMistakes": [
+      "Arquear la espalda para elevar la barra.",
+      "Doblar las muñecas durante el esfuerzo."
+    ],
+    "primaryMuscles": [
+      "Bíceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Braquial"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "concentration-curl",
+    "name": "Curl concentrado",
+    "muscleGroup": "biceps",
+    "difficulty": "easy",
+    "description": "Flexión unilateral de codo con apoyo del brazo.",
+    "instructions": [
+      "Siéntate y apoya el brazo contra la cara interna del muslo.",
+      "Flexiona el codo sin mover el apoyo y baja con control."
+    ],
+    "commonMistakes": [
+      "Despegar el brazo para tomar impulso.",
+      "Dejar caer la mancuerna al extender el codo."
+    ],
+    "primaryMuscles": [
+      "Bíceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Braquial"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "cable-curl",
+    "name": "Curl de bíceps en polea",
+    "muscleGroup": "biceps",
+    "difficulty": "easy",
+    "description": "Flexión de codos con resistencia de polea baja.",
+    "instructions": [
+      "Sujeta el agarre con los brazos junto al cuerpo.",
+      "Flexiona los codos y regresa controlando la tensión del cable."
+    ],
+    "commonMistakes": [
+      "Inclinarse hacia atrás para tirar.",
+      "Mover los hombros en lugar de los codos."
+    ],
+    "primaryMuscles": [
+      "Bíceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Braquial"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "cable-triceps-pushdown",
+    "name": "Extensión de tríceps en polea",
+    "muscleGroup": "triceps",
+    "difficulty": "easy",
+    "description": "Extensión de codos desde una polea alta.",
+    "instructions": [
+      "Coloca los codos junto al cuerpo y sujeta el agarre.",
+      "Extiende los codos y vuelve lentamente a la posición inicial."
+    ],
+    "commonMistakes": [
+      "Mover los hombros para empujar.",
+      "Separar los codos de manera descontrolada."
+    ],
+    "primaryMuscles": [
+      "Tríceps braquial"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "overhead-dumbbell-extension",
+    "name": "Extensión de tríceps sobre la cabeza",
+    "muscleGroup": "triceps",
+    "difficulty": "medium",
+    "description": "Extensión de codos con una mancuerna por encima del tronco.",
+    "instructions": [
+      "Sujeta la mancuerna sobre la cabeza con un agarre estable.",
+      "Flexiona los codos para bajar la carga y vuelve a extenderlos con control."
+    ],
+    "commonMistakes": [
+      "Arquear la espalda para sostener la carga.",
+      "Abrir los codos sin control."
+    ],
+    "primaryMuscles": [
+      "Tríceps braquial"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "lying-triceps-extension",
+    "name": "Extensión de tríceps acostado",
+    "muscleGroup": "triceps",
+    "difficulty": "medium",
+    "description": "Extensión de codos sobre un banco.",
+    "instructions": [
+      "Apoya el cuerpo en el banco y estabiliza los brazos.",
+      "Flexiona los codos para bajar la carga y extiéndelos sin movimientos bruscos."
+    ],
+    "commonMistakes": [
+      "Mover todo el brazo en lugar del codo.",
+      "Bajar la carga sin control cerca de la cabeza."
+    ],
+    "primaryMuscles": [
+      "Tríceps braquial"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "triceps-kickback",
+    "name": "Patada de tríceps con mancuerna",
+    "muscleGroup": "triceps",
+    "difficulty": "easy",
+    "description": "Extensión unilateral del codo con el tronco inclinado.",
+    "instructions": [
+      "Estabiliza el tronco y mantén el brazo junto al costado.",
+      "Extiende el codo hacia atrás y regresa lentamente."
+    ],
+    "commonMistakes": [
+      "Balancear la mancuerna.",
+      "Dejar caer el brazo durante el movimiento."
+    ],
+    "primaryMuscles": [
+      "Tríceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Deltoides posterior"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "close-grip-push-up",
+    "name": "Flexión con manos juntas",
+    "muscleGroup": "triceps",
+    "difficulty": "medium",
+    "description": "Variante de flexión con mayor énfasis en la extensión del codo.",
+    "instructions": [
+      "Coloca las manos más próximas que en una flexión habitual y alinea el cuerpo.",
+      "Desciende con control y empuja manteniendo el tronco estable."
+    ],
+    "commonMistakes": [
+      "Dejar caer la cadera.",
+      "Forzar una posición incómoda de las muñecas."
+    ],
+    "primaryMuscles": [
+      "Tríceps braquial"
+    ],
+    "secondaryMuscles": [
+      "Pectoral mayor",
+      "Abdominales"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "forearm-plank",
+    "name": "Plancha de antebrazos",
+    "muscleGroup": "core",
+    "difficulty": "easy",
+    "description": "Sostén isométrico del tronco sobre antebrazos y pies.",
+    "instructions": [
+      "Apoya los antebrazos y alinea hombros, cadera y piernas.",
+      "Mantén la posición mientras respiras de forma continua."
+    ],
+    "commonMistakes": [
+      "Dejar caer la zona lumbar.",
+      "Contener la respiración durante todo el ejercicio."
+    ],
+    "primaryMuscles": [
+      "Abdominales"
+    ],
+    "secondaryMuscles": [
+      "Glúteos"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "side-plank",
+    "name": "Plancha lateral",
+    "muscleGroup": "core",
+    "difficulty": "medium",
+    "description": "Sostén lateral del tronco con apoyo sobre un antebrazo.",
+    "instructions": [
+      "Coloca el antebrazo bajo el hombro y estabiliza los apoyos.",
+      "Eleva la cadera y mantén el cuerpo alineado."
+    ],
+    "commonMistakes": [
+      "Dejar caer la cadera.",
+      "Rotar el tronco hacia el suelo."
+    ],
+    "primaryMuscles": [
+      "Oblicuos"
+    ],
+    "secondaryMuscles": [
+      "Glúteo medio"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "dead-bug",
+    "name": "Dead bug",
+    "muscleGroup": "core",
+    "difficulty": "easy",
+    "description": "Extensión alternada de extremidades en posición supina.",
+    "instructions": [
+      "Acuéstate boca arriba con brazos y piernas elevados.",
+      "Extiende un brazo y la pierna contraria sin perder el control del tronco."
+    ],
+    "commonMistakes": [
+      "Arquear la zona lumbar.",
+      "Mover las extremidades demasiado rápido."
+    ],
+    "primaryMuscles": [
+      "Abdominales"
+    ],
+    "secondaryMuscles": [
+      "Flexores de cadera"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "bird-dog",
+    "name": "Bird dog",
+    "muscleGroup": "core",
+    "difficulty": "easy",
+    "description": "Extensión contralateral desde apoyo de manos y rodillas.",
+    "instructions": [
+      "Apoya manos y rodillas y estabiliza el tronco.",
+      "Extiende un brazo y la pierna contraria y vuelve de forma controlada."
+    ],
+    "commonMistakes": [
+      "Girar la pelvis.",
+      "Elevar la pierna arqueando la espalda."
+    ],
+    "primaryMuscles": [
+      "Erectores espinales",
+      "Abdominales"
+    ],
+    "secondaryMuscles": [
+      "Glúteos"
+    ],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  },
+  {
+    "slug": "pallof-press",
+    "name": "Press Pallof",
+    "muscleGroup": "core",
+    "difficulty": "medium",
+    "description": "Resistencia a la rotación con una banda o polea.",
+    "instructions": [
+      "Colócate de lado a la resistencia y lleva el agarre al pecho.",
+      "Extiende los brazos al frente sin girar el tronco y regresa."
+    ],
+    "commonMistakes": [
+      "Girar hacia la resistencia.",
+      "Mover los pies durante cada repetición."
+    ],
+    "primaryMuscles": [
+      "Oblicuos",
+      "Abdominales"
+    ],
+    "secondaryMuscles": [],
+    "jointAngles": {},
+    "requiredKeypoints": [],
+    "analysisSupported": false
+  }
+]

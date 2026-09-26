@@ -40,6 +40,7 @@ def test_migration_runner_is_independent_of_working_directory(
         "users",
         "credentials",
         "refresh_tokens",
+        "exercises",
     }
 
 
@@ -53,7 +54,7 @@ def test_failed_migration_rolls_back_ddl(
     (tmp_path / "alembic/versions/test_failure.py").write_text(
         "from alembic import op\n"
         'revision = "test_failure"\n'
-        'down_revision = "0001"\n'
+        'down_revision = "0002"\n'
         "def upgrade():\n"
         '    op.execute("CREATE TABLE incomplete (id INTEGER)")\n'
         '    raise RuntimeError("intentional migration failure")\n'

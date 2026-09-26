@@ -1,13 +1,27 @@
-"""Seed script placeholder for populating the exercise catalog.
+"""Seed a migrated database: uv run python -m scripts.seed_exercises."""
 
-Will be implemented alongside the Exercise model/repository. Target per the
-project prompt: at least 35 exercises across the 7 defined muscle groups.
-"""
+import asyncio
+
+from app.core.config import Settings
+from app.data.catalog import load_catalog
+from app.db.session import Database
+from app.repositories.exercises import SqlAlchemyExerciseRepository
+
+
+async def seed(settings: Settings) -> int:
+    catalog = load_catalog()
+    database = Database(settings.database_url)
+    try:
+        async with database.session() as session, session.begin():
+            await session.connection(execution_options={"sqlite_write": True})
+            await SqlAlchemyExerciseRepository(session).seed(catalog)
+    finally:
+        await database.dispose()
+    return len(catalog)
 
 
 def main() -> None:
-    """Entry point for `uv run python scripts/seed_exercises.py` (not yet implemented)."""
-    raise NotImplementedError("Exercise seed data lands once the Exercise model exists.")
+    print(f"Seeded {asyncio.run(seed(Settings()))} exercises")
 
 
 if __name__ == "__main__":

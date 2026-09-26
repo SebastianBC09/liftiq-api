@@ -8,6 +8,7 @@ RUN uv sync --locked --no-install-project --no-dev
 COPY app ./app
 COPY alembic ./alembic
 COPY alembic.ini ./
+COPY scripts/seed_exercises.py ./scripts/seed_exercises.py
 
 FROM python:3.13-slim AS runtime
 RUN useradd --create-home --uid 1000 appuser
